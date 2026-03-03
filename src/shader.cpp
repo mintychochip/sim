@@ -22,7 +22,7 @@ ShaderLog::ShaderLog(ShaderLogType type, GLuint id) {
     }
 }
 
-Shader::Shader(GLuint type, const std::string& source) : _id{glCreateShader(type)} {
+Shader::Shader(ShaderType type, const std::string& source) : _id{glCreateShader(static_cast<GLuint>(type)} {
     auto cstr = source.c_str();
     glShaderSource(_id, 1, &cstr, NULL);
     glCompileShader(_id);
@@ -43,4 +43,8 @@ ShaderProgram::ShaderProgram(GLuint vertex, GLuint fragment) : _id{glCreateProgr
 
 void ShaderProgram::use() {
     glUseProgram(_id);
+}
+
+ShaderProgram::~ShaderProgram() {
+    glDeleteProgram(_id);
 }

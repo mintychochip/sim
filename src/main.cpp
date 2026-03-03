@@ -2,6 +2,16 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+#include "shader.hpp"
+#include "vao.hpp"
+
+const char *vertex_shader_source = "#version 330 core\n"
+    "layout (location = 0) in vec3 aPos;\n"
+    "void main()\n"
+    "{\n"
+    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+    "}\0";
+
 void handle_input(GLFWwindow *window) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, true);
@@ -27,19 +37,31 @@ int main() {
     glViewport(0, 0, 800, 600);
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+    
     float vertices[] = {
         -0.5f, -0.5f, 0.0f,
         0.5f, -0.5f, 0.0f,
         0.0f, 0.5f, 0.0f
     };
+
+    unsigned int indices[] = {
+        0, 1, 3,
+        1, 2, 3
+    };
+
+    auto vertex = Shader{GL_VERTEX_SHADER};
+    auto fragment = Shader{ShaderType::Fragment};
+    auto program = ShaderProgram{vertex.id(), fragment.id()};
+    auto vao = VertexArrayObject{1};
+    vao.use();
+    auto vbo = VertexBufferObject{vertices,sizeof(vertices),BufferUsageType::Static};
+    auto ebo = ElementBufferObject{indices, sizeof(indices), BufferUsageType::Static};
     while (!glfwWindowShouldClose(window)) {
         handle_input(window);
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-        unsigned int VBO;
-        glGenBuffers(1, &VBO);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+        program.use();
+        vao.use();
         glfwSwapBuffers(window);
         glfwPollEvents();
     }

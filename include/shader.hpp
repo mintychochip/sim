@@ -8,9 +8,14 @@ enum ShaderLogType {
     Program
 };
 
+enum class ShaderType {
+    Vertex = GL_VERTEX_SHADER,
+    Fragment = GL_FRAGMENT_SHADER
+};
+
 class ShaderLog {
     public:
-        explicit ShaderLog(ShaderLogType type, GLuint id);
+        explicit ShaderLog(ShaderLogType type, std::size_t id);
     private:
         int _success;
         std::string _log;
@@ -18,15 +23,20 @@ class ShaderLog {
 
 class Shader {
     public:
-        GLuint _id;
-        Shader(GLuint type, const std::string& source);
+        Shader(ShaderType type, const std::string& source);
         ~Shader();
         void use();
+        void attach_program(ShaderProgram& program);
+        unsigned int id() const {
+            return _id;
+        }
+    private:
+        unsigned int _id;
 };
 
 class ShaderProgram {
     public:
-        ShaderProgram(GLuint vertex, GLuint fragment);
+        ShaderProgram(std::size_t vertex, std::size_t fragment);
         ~ShaderProgram();
         void use();
     private:
@@ -34,3 +44,6 @@ class ShaderProgram {
         
 };
 
+Shader load_shader(const std::path) {
+
+}
