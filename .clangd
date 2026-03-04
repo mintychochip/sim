@@ -1,0 +1,6 @@
+CompileFlags:
+  CompilationDatabase: "."
+  Add: 
+    - -Iinclude
+    - -std=c++17
+    - -IC:/Users/justi/vcpkg/installed/x64-windows/include

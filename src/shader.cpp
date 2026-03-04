@@ -1,50 +1,44 @@
-#include <string>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 #include "shader.hpp"
 
-ShaderLog::ShaderLog(ShaderLogType type, GLuint id) {
-    GLint log_length = 0;
-    glGetProgramiv(id, GL_INFO_LOG_LENGTH, &log_length);
-    if (log_length > 0) {
-        _log.resize(log_length);
+namespace shader {
+    Shader::Shader(GLuint type) : _id{glCreateShader(type)} {}
+    
+    Shader::~Shader() { glDeleteShader(_id); }
+    
+    void Shader::source(const std::string& source) {
+        const char* src = source.c_str();
+        glShaderSource(_id, 1, &src, nullptr);
     }
-    if (type == ShaderLogType::Shader) {
-        glGetShaderiv(id, GL_COMPILE_STATUS, &_success);
-        if (log_length > 0) {
-            glGetShaderInfoLog(id, log_length, nullptr, &_log[0]);
+
+    Result Shader::compile(unsigned int log_size) {
+        glCompileShader(_id);
+        int success;
+        glGetShaderiv(_id, GL_COMPILE_STATUS, &success);
+        std::string log;
+        if (!success) {
+            log.resize(log_size);
+            glGetShaderInfoLog(_id, log_size, nullptr, &log[0]); 
         }
-    } else {
-        glGetProgramiv(id, GL_LINK_STATUS, &_success);
-        if (log_length > 0) {
-            glGetProgramInfoLog(id, log_length, nullptr, &_log[0]);
-        }
+        return Result {success, log};
     }
-}
 
-Shader::Shader(ShaderType type, const std::string& source) : _id{glCreateShader(static_cast<GLuint>(type)} {
-    auto cstr = source.c_str();
-    glShaderSource(_id, 1, &cstr, NULL);
-    glCompileShader(_id);
+    ShaderProgram::ShaderProgram() : _id {glCreateProgram()} {}
 
-    auto log = ShaderLog{ShaderLogType::Shader,_id};
+    ShaderProgram::~ShaderProgram() { glDeleteProgram(_id); }
 
-}
+    void ShaderProgram::attach_shader(Shader& shader) {
+        glAttachShader(_id, shader.id());
+    }
 
-Shader::~Shader() {
-    glDeleteShader(_id); 
-}
-
-ShaderProgram::ShaderProgram(GLuint vertex, GLuint fragment) : _id{glCreateProgram()} {
-    glAttachShader(_id, vertex);
-    glAttachShader(_id, fragment);
-    glLinkProgram(_id);
-}
-
-void ShaderProgram::use() {
-    glUseProgram(_id);
-}
-
-ShaderProgram::~ShaderProgram() {
-    glDeleteProgram(_id);
+    Result ShaderProgram::link(unsigned int log_size) {
+        glLinkProgram(_id);
+        int success;
+        glGetProgramiv(_id, GL_LINK_STATUS, &success);
+        std::string log;
+        if (!success) {
+            log.resize(log_size);
+            glGetProgramInfoLog(_id, log_size, nullptr, &log[log_size]);
+        }
+        return Result {success, log};
+    }
 }

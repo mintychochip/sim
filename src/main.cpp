@@ -1,9 +1,11 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <sstream>
+#include <fstream>
 
 #include "shader.hpp"
-#include "vao.hpp"
+#include "objects.hpp"
 
 const char *vertex_shader_source = "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
@@ -16,6 +18,13 @@ void handle_input(GLFWwindow *window) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, true);
     }
+}
+
+std::string read_string(const char* file_path) {
+    std::ifstream file(file_path);
+    std::stringstream buf;
+    buf << file.rdbuf();
+    return buf.str();
 }
 
 int main() {
@@ -43,25 +52,36 @@ int main() {
         0.5f, -0.5f, 0.0f,
         0.0f, 0.5f, 0.0f
     };
-
+    auto vao = VertexArrayObject{1};
+    vao.use();
+    auto vbo = VertexBufferObject{1};
+    vbo.use();
+    vbo.update_data(vertices, sizeof(vertices));
+    vao.attribute_pointer(0, 3, AttributeType::Float, false, 3 * sizeof(float), (void*) 0);
     unsigned int indices[] = {
         0, 1, 3,
         1, 2, 3
     };
-
-    auto vertex = Shader{GL_VERTEX_SHADER};
-    auto fragment = Shader{ShaderType::Fragment};
-    auto program = ShaderProgram{vertex.id(), fragment.id()};
-    auto vao = VertexArrayObject{1};
-    vao.use();
-    auto vbo = VertexBufferObject{vertices,sizeof(vertices),BufferUsageType::Static};
-    auto ebo = ElementBufferObject{indices, sizeof(indices), BufferUsageType::Static};
+    std::cout << __func__ << '\n';
+    auto vertex = shader::Shader{GL_VERTEX_SHADER};
+    const std::string ve_source = read_string("./shaders/vertex.glsl");
+    std::cout << ve_source << std::endl;
+    vertex.source(ve_source);
+    auto ve_result = vertex.compile(512);
+    auto fragment = shader::Shader{GL_FRAGMENT_SHADER};
+    std::string frag_source = read_string("./shaders/fragment.glsl");
+    fragment.source(frag_source);
+    auto fr_result = fragment.compile(512);
+    std::cout << fr_result.log;
+    auto program = shader::ShaderProgram{};
+    program.attach_shader(vertex);
+    program.attach_shader(fragment);
+    auto link_result = program.link(512);
     while (!glfwWindowShouldClose(window)) {
         handle_input(window);
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-        program.use();
+        glUseProgram(program.id());
         vao.use();
+        glDrawArrays(GL_TRIANGLES,0, 3);
         glfwSwapBuffers(window);
         glfwPollEvents();
     }

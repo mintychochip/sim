@@ -1,49 +1,35 @@
 #pragma once
 #include <string>
-#include <GLFW/glfw3.h>
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
-enum ShaderLogType {
-    Shader,
-    Program
-};
+namespace shader {
 
-enum class ShaderType {
-    Vertex = GL_VERTEX_SHADER,
-    Fragment = GL_FRAGMENT_SHADER
-};
+    struct Result {
+        int success;
+        std::string log;
+    };
 
-class ShaderLog {
-    public:
-        explicit ShaderLog(ShaderLogType type, std::size_t id);
-    private:
-        int _success;
-        std::string _log;
-};
+    class Shader {
+        private:
+            unsigned int _id;
+        public:
+            Shader(unsigned int type);
+            ~Shader();
+            void source(const std::string& source);
+            Result compile(unsigned int log_size);
+            unsigned int id() const { return _id; }
+    };
 
-class Shader {
-    public:
-        Shader(ShaderType type, const std::string& source);
-        ~Shader();
-        void use();
-        void attach_program(ShaderProgram& program);
-        unsigned int id() const {
-            return _id;
-        }
-    private:
-        unsigned int _id;
-};
-
-class ShaderProgram {
-    public:
-        ShaderProgram(std::size_t vertex, std::size_t fragment);
-        ~ShaderProgram();
-        void use();
-    private:
-        GLuint _id;
-        
-};
-
-Shader load_shader(const std::path) {
+    class ShaderProgram {
+        private:
+            unsigned int _id;
+        public:
+            ShaderProgram();
+            ~ShaderProgram();
+            void attach_shader(Shader& shader);
+            Result link(unsigned int log_size);
+            unsigned int id() const { return _id; }
+    };
 
 }

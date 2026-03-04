@@ -1,0 +1,26 @@
+[
+{
+  "directory": "C:/Users/justi/distri/build",
+  "command": "C:\\msys64\\mingw64\\bin\\cc.exe -DGLFW_DLL @CMakeFiles/Simulator.dir/includes_C.rsp  -o CMakeFiles\\Simulator.dir\\src\\glad.c.obj -c C:\\Users\\justi\\distri\\src\\glad.c",
+  "file": "C:/Users/justi/distri/src/glad.c",
+  "output": "CMakeFiles/Simulator.dir/src/glad.c.obj"
+},
+{
+  "directory": "C:/Users/justi/distri/build",
+  "command": "C:\\msys64\\mingw64\\bin\\c++.exe -DGLFW_DLL @CMakeFiles/Simulator.dir/includes_CXX.rsp -std=gnu++17 -o CMakeFiles\\Simulator.dir\\src\\main.cpp.obj -c C:\\Users\\justi\\distri\\src\\main.cpp",
+  "file": "C:/Users/justi/distri/src/main.cpp",
+  "output": "CMakeFiles/Simulator.dir/src/main.cpp.obj"
+},
+{
+  "directory": "C:/Users/justi/distri/build",
+  "command": "C:\\msys64\\mingw64\\bin\\c++.exe -DGLFW_DLL @CMakeFiles/Simulator.dir/includes_CXX.rsp -std=gnu++17 -o CMakeFiles\\Simulator.dir\\src\\shader.cpp.obj -c C:\\Users\\justi\\distri\\src\\shader.cpp",
+  "file": "C:/Users/justi/distri/src/shader.cpp",
+  "output": "CMakeFiles/Simulator.dir/src/shader.cpp.obj"
+},
+{
+  "directory": "C:/Users/justi/distri/build",
+  "command": "C:\\msys64\\mingw64\\bin\\c++.exe -DGLFW_DLL @CMakeFiles/Simulator.dir/includes_CXX.rsp -std=gnu++17 -o CMakeFiles\\Simulator.dir\\src\\vao.cpp.obj -c C:\\Users\\justi\\distri\\src\\vao.cpp",
+  "file": "C:/Users/justi/distri/src/vao.cpp",
+  "output": "CMakeFiles/Simulator.dir/src/vao.cpp.obj"
+}
+]
