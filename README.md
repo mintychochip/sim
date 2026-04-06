@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <strong>🎮 OpenGL Learning Project — Custom Graphics Engine</strong>
+  <strong>OpenGL Learning Project — Custom Graphics Engine</strong>
 </p>
 
 <p align="center">
@@ -18,18 +18,18 @@
 
 ---
 
-## ✨ Features
+## Features
 
-- **🔺 Triangle Rendering** — Basic OpenGL pipeline demonstration
-- **📝 Custom Shader Classes** — C++ wrappers for shader compilation and linking
-- **📦 VBO/VAO Management** — Object-oriented vertex buffer and array handling
-- **🪟 GLFW Integration** — Cross-platform window creation and input handling
-- **🔄 Real-time Loop** — Game loop with buffer swapping and event polling
-- **📐 Modern OpenGL** — Core profile 3.3 with vertex attributes
+- **Triangle Rendering** — Basic OpenGL pipeline demonstration
+- **Custom Shader Classes** — C++ wrappers for shader compilation and linking
+- **VBO/VAO Management** — Object-oriented vertex buffer and array handling
+- **GLFW Integration** — Cross-platform window creation and input handling
+- **Real-time Loop** — Game loop with buffer swapping and event polling
+- **Modern OpenGL** — Core profile 3.3 with vertex attributes
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Component | Technology |
 |-----------|------------|
@@ -41,7 +41,7 @@
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -80,7 +80,7 @@ cmake .. -G "Visual Studio 17 2022"
 
 ---
 
-## 📖 Architecture
+## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -107,7 +107,7 @@ cmake .. -G "Visual Studio 17 2022"
 
 ---
 
-## 🧩 Core Components
+## Core Components
 
 ### Shader System (`shader.hpp`)
 
@@ -151,7 +151,7 @@ vao.attribute_pointer(
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 sim/
@@ -173,7 +173,7 @@ sim/
 
 ---
 
-## 🎓 Learning Goals
+## Learning Goals
 
 This project demonstrates:
 
@@ -185,7 +185,7 @@ This project demonstrates:
 
 ---
 
-## 🔧 Customization
+## Customization
 
 ### Adding New Shaders
 
@@ -205,7 +205,7 @@ The wrapper classes support:
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 This is a learning project, but improvements welcome!
 
@@ -215,12 +215,12 @@ This is a learning project, but improvements welcome!
 
 ---
 
-## 📄 License
+## License
 
 MIT License
 
 ---
 
 <p align="center">
-  Learning OpenGL, one triangle at a time 🔺
+  Learning OpenGL, one triangle at a time
 </p>
